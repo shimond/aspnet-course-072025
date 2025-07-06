@@ -2,7 +2,6 @@ using Api.Contracts;
 using Api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
-// Add services to the container.
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddControllers();
 builder.Services.AddOutputCache(); // save cache in memory
@@ -25,43 +24,6 @@ app.UseOutputCache();
 app.UseStaticFiles();
 app.MapControllers();
 
-//app.Use(async (context, next) =>
-//{
-//    await context.Response.WriteAsync(" My First mw  1 "); // 1
-//    await next();
-//    await context.Response.WriteAsync(" My First mw  2 "); // 5
-//});
-
-
-//app.Use(async (context, next) =>
-//{
-//    await context.Response.WriteAsync(" My Second mw 1 "); // 2
-//    await next();
-//    await context.Response.WriteAsync(" My Second mw 2 "); // 4
-//});
-
-//app.Run(async (context) =>
-//{
-//    await context.Response.WriteAsync(" Last One "); // 3
-//});
-
 
 app.Run();
 
-//class ShimonCacheStore : IOutputCacheStore
-//{
-//    public ValueTask EvictByTagAsync(string tag, CancellationToken cancellationToken)
-//    {
-//        throw new NotImplementedException();
-//    }
-
-//    public ValueTask<byte[]?> GetAsync(string key, CancellationToken cancellationToken)
-//    {
-//        throw new NotImplementedException();
-//    }
-
-//    public ValueTask SetAsync(string key, byte[] value, string[]? tags, TimeSpan validFor, CancellationToken cancellationToken)
-//    {
-//        throw new NotImplementedException();
-//    }
-//}
