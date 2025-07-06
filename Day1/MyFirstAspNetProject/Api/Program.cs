@@ -21,19 +21,6 @@ app.Use(async (context, next) => {
 });
 
 
-// Configure the HTTP request pipeline.
-//app.Use(async (context, next) =>
-//{
-//    try
-//    {
-//        await next();
-//    }
-//    catch (Exception ex)
-//    {
-//        app.Logger.LogError(ex, "Application error");
-//    }
-//});
-
 app.UseOutputCache();
 app.UseStaticFiles();
 app.MapControllers();
