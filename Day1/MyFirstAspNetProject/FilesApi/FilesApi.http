@@ -1,0 +1,7 @@
+@FilesApi_HostAddress =  https://localhost:7174
+
+GET {{FilesApi_HostAddress}}/api/filesManager/test
+Accept: application/json
+aspnetcourse: 06072025
+
+###
