@@ -10,6 +10,9 @@ namespace FilesApi.Controllers
     public class FilesManagerController(IFileManagerService fileManagerService) : ControllerBase
     {
 
+        // retrun relevant status code foreach request and error handling
+
+
         [HttpGet("filesCount/{folderPath}")]
         public int GetFilesCount(string folderPath)
         {
