@@ -63,7 +63,7 @@ Count how many files are in a specified folder on the server.
 - If the folder exists:
   - Return the number of files in the folder (non-recursive).
 - If the folder does not exist:
-  - Return a suitable error code and message.
+  - Return a suitable error code and message (404)
 
 ---
 
@@ -88,7 +88,7 @@ Rename a folder on the server.
 
 ## 🧪 Testing the API
 
-Use tools like **Postman**, **curl**, or your browser (for the GET) to test the API.
+Use tools like **Postman**  or your browser (for the GET) to test the API.
 
 **Important:** Every request must include the correct `aspnetcourse` header, or it will be rejected by the middleware.
 
