@@ -17,3 +17,7 @@ aspnetcourse: 06072025
 }
 
 ###
+
+
+GET {{FilesApi_HostAddress}}/api/shimon
+aspnetcourse: 06072025

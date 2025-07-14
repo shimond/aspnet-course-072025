@@ -1,6 +1,6 @@
 ﻿namespace FilesApi.Services;
 
-public class FileManagerService : IFileManagerService
+public class FileManagerService(ILogger<FileManagerService> logger) : IFileManagerService
 {
     public int GetFilesCount(string folderPath)
     {

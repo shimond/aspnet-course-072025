@@ -1,9 +1,12 @@
+using FilesApi.Apis;
+using FilesApi.Controllers;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<IFileManagerService, FileManagerService>();
-builder.Services.AddControllers();
+//builder.Services.AddControllers();
 // Register Swagger services
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -13,16 +16,17 @@ builder.Services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
-app.Use(async (context, next) => {
+app.Use(async (context, next) =>
+{
 
-	try
-	{
-		await next();
-	}
-	catch (Exception ex)
-	{
-		throw;
-	}
+    try
+    {
+        await next();
+    }
+    catch (Exception ex)
+    {
+        throw;
+    }
 });
 
 // Enable Swagger middleware for all environments
@@ -39,7 +43,11 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-app.MapControllers();
+app.MapFilesApi();
+
+//app.MapControllers();
+
+
 
 app.Run();
 
