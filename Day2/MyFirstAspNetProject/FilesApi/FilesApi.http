@@ -1,0 +1,19 @@
+@FilesApi_HostAddress = https://localhost:7174
+
+
+@folderPath=C%3A%5CYV
+GET {{FilesApi_HostAddress}}/api/filesmanager/filesCount/{{folderPath}}
+aspnetcourse: 06072025
+
+###
+
+POST {{FilesApi_HostAddress}}/api/filesmanager/Rename
+Content-Type: application/json
+aspnetcourse: 06072025
+
+{
+  "oldName": "c:\\YV2",
+  "newName": "yv3"
+}
+
+###
