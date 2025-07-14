@@ -1,10 +1,12 @@
 ﻿namespace Api.Model.Config;
 
-public class ServerInfoConfig
+public record ServerInfoConfig
 {
-    public string LoggingFolder { get; set; } = "";
-    public string[] AllowClients { get; set; } = [];
-    public int DefaultTimeOut { get; set; }
-    public bool AllowHttps { get; set; }
+    public string LoggingFolder { get; init; } = "";
+    public string[] AllowClients { get; init; } = Array.Empty<string>();
+    public int DefaultTimeOut { get; init; }
+    public bool AllowHttps { get; init; }
 }
+
+
 

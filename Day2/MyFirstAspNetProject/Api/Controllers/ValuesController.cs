@@ -17,6 +17,7 @@ public class ValuesController(IConfiguration configuration, IOptions<ServerInfoC
     public ActionResult GetValueFromConfigComplex()
     {
         var value = serverOptions.Value;
+        //value.AllowHttps = true;
         return Ok(value);
     }
 
