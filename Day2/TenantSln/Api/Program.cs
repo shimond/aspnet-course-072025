@@ -7,8 +7,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.Configure<TenantConfig>(builder.Configuration.GetSection("TenantSettings"));
 builder.Services.AddScoped<ITenantContextAccessor, TenantContextAccessor>();
-//builder.Services.AddSingleton<ITenantContextAccessor, TenantContextAccessor>();
-//builder.Services.AddTransient<ITenantContextAccessor, TenantContextAccessor>();
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();

@@ -16,7 +16,10 @@ namespace Api.Middlewares
             _next = next;
         }
 
-        public Task Invoke(HttpContext httpContext, IOptions<TenantConfig> tenantsOptions, ITenantContextAccessor tenantContextAccessor)
+        // IOptions - value on startup
+        // IOptionsSnapshot - value on runtime
+        // IOptionsMonitor - 
+        public Task Invoke(HttpContext httpContext, IOptionsSnapshot<TenantConfig> tenantsOptions, ITenantContextAccessor tenantContextAccessor)
         {
             var tenantId = httpContext.Request.Headers["X-Tenant-ID"].ToString();
             if (string.IsNullOrEmpty(tenantId))
