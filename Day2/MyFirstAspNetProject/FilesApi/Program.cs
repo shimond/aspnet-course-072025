@@ -37,6 +37,35 @@ app.Run();
 // 400, 401, 403, 404, 409 - Client error
 // 500, 501, 502, 503 - Server error
 
+Person po = new Person { Age = null };
+
+class Person
+{
+	public string Name { get; set; }
+	public int? Age { get; set; }
+	public string? Address { get; set; }
+}
+
+
+// primitive types  (Stack )- Complex types (Heap) = pointers
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

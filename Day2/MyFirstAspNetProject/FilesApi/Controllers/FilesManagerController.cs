@@ -41,20 +41,25 @@ namespace FilesApi.Controllers
         {
             try
             {
+                if(request.OldName == request.NewName)
+                {
+                    request.NewName = $"{request.NewName}_{Guid.NewGuid()}";
+                }
+
                 fileManagerService.RenameDirectory(request.OldName, request.NewName);
                 return Ok(request.NewName);
             }
-            catch (DirectoryNotFoundException ex)
+            catch (DirectoryNotFoundException)
             {
                 return NotFound();
             }
-            catch(IOException ex)
-            { 
+            catch (IOException)
+            {
                 // 409
                 return Conflict($"A directory with the name '{request.NewName}' already exists.");
             }
-            
-        }
+
         }
     }
+
 }
