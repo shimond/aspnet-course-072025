@@ -1,6 +1,4 @@
-﻿using FilesApi.Contracts;
-
-namespace FilesApi.Services;
+﻿namespace FilesApi.Services;
 
 public class FileManagerService : IFileManagerService
 {

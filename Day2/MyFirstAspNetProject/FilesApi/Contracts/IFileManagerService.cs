@@ -1,5 +1,4 @@
 ﻿namespace FilesApi.Contracts;
-
 public interface IFileManagerService
 {
     int GetFilesCount(string folderPath);

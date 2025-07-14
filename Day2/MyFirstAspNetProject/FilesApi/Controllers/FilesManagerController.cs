@@ -1,7 +1,4 @@
-﻿using FilesApi.Contracts;
-using FilesApi.Model.Requests;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace FilesApi.Controllers
 {
