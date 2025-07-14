@@ -16,7 +16,8 @@
       "launchBrowser": false,
       "applicationUrl": "https://localhost:7248;http://localhost:5196",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ServerInfo__LoggingFolder": "c:\\FROM_ENV_TEST"
       }
     }
   }

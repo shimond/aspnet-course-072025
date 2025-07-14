@@ -27,7 +27,6 @@ namespace FilesApi.Controllers
             {
                 logger.LogError(ex, "An error occurred while getting files count for folder: {FolderPath}", folderPath);
                 throw;
-                //throw ex;
             }
 
         }
@@ -41,12 +40,13 @@ namespace FilesApi.Controllers
         {
             try
             {
+                var recordToUse = request;
                 if(request.OldName == request.NewName)
                 {
-                    request.NewName = $"{request.NewName}_{Guid.NewGuid()}";
+                    recordToUse = request with { NewName = $"{request.NewName}_renamed" };
                 }
 
-                fileManagerService.RenameDirectory(request.OldName, request.NewName);
+                fileManagerService.RenameDirectory(recordToUse.OldName, recordToUse.NewName);
                 return Ok(request.NewName);
             }
             catch (DirectoryNotFoundException)
