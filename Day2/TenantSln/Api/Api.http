@@ -1,0 +1,7 @@
+@Api_HostAddress = http://localhost:5062
+
+GET {{Api_HostAddress}}/api/orders/test
+Accept: application/json
+X-Tenant-ID: alpha-logistics
+
+###
