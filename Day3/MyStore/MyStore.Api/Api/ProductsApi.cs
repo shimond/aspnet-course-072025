@@ -1,5 +1,5 @@
+using FluentValidation;
 using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
 using MyStore.Api.Contracts;
 using MyStore.Api.Models;
 
@@ -26,8 +26,17 @@ public static class ProductsApi
     }
 
 
-    private static async Task<Created<Product>> AddProductAsync(IProductRepository repo, Product product)
+    private static async Task<Results<Created<Product>, ValidationProblem>> AddProductAsync(
+        IProductRepository repo, 
+        IValidator<Product> validator,
+        Product product)
     {
+
+        var validationResults = await validator.ValidateAsync(product);
+        if (!validationResults.IsValid)
+        {
+            return TypedResults.ValidationProblem(validationResults.ToDictionary());
+        }
         var created = await repo.AddNewProduct(product);
         return TypedResults.Created($"/products/{created.Id}", created); // 201 - return created location in the header response
     }
@@ -42,24 +51,18 @@ public static class ProductsApi
     {
         
         var productToUpdate = await repo.GetProductById(id);
-        if (productToUpdate is null)
+        var updated = await repo.UpdateProduct(product);
+        if (updated is null)
         {
             return TypedResults.NotFound();
         }
-
-        var updated = await repo.UpdateProduct(product);
-        if (updated is null)
-            return TypedResults.NotFound();
         return TypedResults.Ok(updated);
     }
 
     private static async Task<Results<NotFound, Ok<Product>>> DeleteProductAsync(int id, IProductRepository repo)
     {
         var existing = await repo.GetProductById(id);
-        if (existing is null)
-            return TypedResults.NotFound();
         await repo.DeleteProduct(id);
-        
         return TypedResults.Ok(existing);
     }
 }

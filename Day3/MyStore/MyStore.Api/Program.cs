@@ -3,16 +3,28 @@ using MyStore.Api.Contracts;
 using MyStore.Api.Data;
 using MyStore.Api.Services;
 using MyStore.Api.Api;
-using MyStore.Api.Exceptions; // Add this for ProductsApi extension
+using MyStore.Api.Exceptions;
+using FluentValidation;
+using System.Reflection; // Add this for ProductsApi extension
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddOpenApi();
+
+builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+
 //builder.Services.AddDbContext<MyStoreDataContext>(o => o.UseInMemoryDatabase("MyStoreDb"));
 builder.Services.AddDbContext<MyStoreDataContext>(o => o.UseSqlServer(builder.Configuration.GetConnectionString("MyStoreDB")));
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddCors(x => 
+x.AddDefaultPolicy(o => o.WithOrigins("https://shimonclient.com")
+                            .AllowCredentials()
+                            .AllowAnyHeader()
+                            .AllowAnyMethod()));
 
 var app = builder.Build();
+
+app.UseCors();
 
 if (app.Environment.IsDevelopment())
 {

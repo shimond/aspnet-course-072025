@@ -1,4 +1,6 @@
-﻿namespace MyStore.Api.Models;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace MyStore.Api.Models;
 
 public record Product
 {

@@ -12,9 +12,9 @@ POST {{MyStore.Api_HostAddress}}/products
 Content-Type: application/json
 
 {
-  "name": "Bamba",
-  "price": 12.6,
-  "description": "Bamba shel OSEM."
+  "name": "This is the new Product2",
+  "price": 45,
+  "description": "aasdasdas"
 }
 
 ### Get All Products
