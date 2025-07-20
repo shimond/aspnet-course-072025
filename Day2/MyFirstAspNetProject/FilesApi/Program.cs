@@ -82,9 +82,39 @@ app.Run();
 
 
 
+// DI
+// Middlewares
+// Configuration
+
+
+//Product
+//Category
+
+// SqlCommand, SqlConnection, SqlDataReader
+// DataSet, TypedDataSet, DataTable, TableAdapter, DataRelation, DataColumn, DataRow
+// Linq to SQL - Maps to objects
+// NHibernate, Entity Framework - ORM - Object Relational Mapping -
+//                                      Separates database scheme from code
 
 
 
+
+class Product
+{
+    public int Id{ get; set; }
+    public string Name { get; set; }
+
+    public List<Category> Categories { get; set; }
+}
+
+class Category
+{
+    public int Id{ get; set; }
+    public string Name { get; set; }
+
+    public List<Product> Products { get; set; }
+
+}
 
 
 
