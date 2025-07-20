@@ -1,17 +1,18 @@
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using MyStore.Api.Api;
 using MyStore.Api.Contracts;
 using MyStore.Api.Data;
-using MyStore.Api.Services;
-using MyStore.Api.Api;
 using MyStore.Api.Exceptions;
-using FluentValidation;
-using System.Reflection; // Add this for ProductsApi extension
+using MyStore.Api.Services;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddOpenApi();
 
 builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+builder.Services.AddAutoMapper(typeof(Program));
 
 //builder.Services.AddDbContext<MyStoreDataContext>(o => o.UseInMemoryDatabase("MyStoreDb"));
 builder.Services.AddDbContext<MyStoreDataContext>(o => o.UseSqlServer(builder.Configuration.GetConnectionString("MyStoreDB")));

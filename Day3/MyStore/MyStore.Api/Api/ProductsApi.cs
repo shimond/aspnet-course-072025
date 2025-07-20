@@ -1,3 +1,4 @@
+using AutoMapper;
 using FluentValidation;
 using Microsoft.AspNetCore.Http.HttpResults;
 using MyStore.Api.Contracts;
@@ -20,16 +21,17 @@ public static class ProductsApi
         return routes;
     }
 
-    private static async Task<Results<NotFound, Ok<Product>>> GetProductById(IProductRepository repo, int id)
+    private static async Task<Results<NotFound, Ok<ProductDTO>>> GetProductById(IProductRepository repo, IMapper mapper, int id)
     {
         var product = await repo.GetProductById(id);
-        return TypedResults.Ok(product);
+        return TypedResults.Ok(mapper.Map<ProductDTO>(product));
     }
 
 
     private static async Task<Results<Created<ProductDTO>, ValidationProblem>> AddProductAsync(
         IProductRepository repo, 
         IValidator<AddProductRequest> validator,
+        IMapper mapper,
         AddProductRequest product)
     {
 
@@ -39,31 +41,22 @@ public static class ProductsApi
             return TypedResults.ValidationProblem(validationResults.ToDictionary());
         }
 
-        var productToInsert = new Product
-        {
-            Name = product.Name,
-            Description = product.Description,
-            Price = product.Price,
-        };
-
+        var productToInsert = mapper.Map<Product>(product);
         var created = await repo.AddNewProduct(productToInsert);
-        ProductDTO result = new ProductDTO
-        {
-            Id = created.Id,
-            ProductName = created.Name,
-            Description = created.Description,
-            ProductPrice = created.Price
-        };
-        return TypedResults.Created($"/products/{created.Id}", result); 
+        ProductDTO result = mapper.Map<ProductDTO>(created);
+        return TypedResults.Created($"/products/{created.Id}", result);
     }
 
-    private static async Task<Ok<List<Product>>> GetAllProductsAsync(IProductRepository repo)
+    private static async Task<Ok<List<ProductDTO>>> GetAllProductsAsync(IProductRepository repo, IMapper mapper)
     {
         var products = await repo.GetAllProducts();
-        return TypedResults.Ok(products);
+        var productsDto = mapper.Map<List<ProductDTO>>(products);
+        return TypedResults.Ok(productsDto);
     }
 
-    private static async Task<Results<NotFound, Ok<Product>>> UpdateProductAsync(int id, IProductRepository repo, Product product)
+    private static async Task<Results<NotFound, Ok<ProductDTO>>> UpdateProductAsync(int id, IProductRepository repo, 
+        IMapper mapper, 
+        Product product)
     {
         
         var productToUpdate = await repo.GetProductById(id);
@@ -72,13 +65,13 @@ public static class ProductsApi
         {
             return TypedResults.NotFound();
         }
-        return TypedResults.Ok(updated);
+        return TypedResults.Ok(mapper.Map<ProductDTO>(updated));
     }
 
-    private static async Task<Results<NotFound, Ok<Product>>> DeleteProductAsync(int id, IProductRepository repo)
+    private static async Task<Results<NotFound, Ok<ProductDTO>>> DeleteProductAsync(IMapper mapper, IProductRepository repo, int id)
     {
         var existing = await repo.GetProductById(id);
         await repo.DeleteProduct(id);
-        return TypedResults.Ok(existing);
+        return TypedResults.Ok(mapper.Map<ProductDTO>(existing));
     }
 }

@@ -2,7 +2,7 @@
 
 ### GET BY ID
 
-GET {{MyStore.Api_HostAddress}}/products/1
+GET {{MyStore.Api_HostAddress}}/products/4
 accept: application/json
 Content-Type: application/json
 

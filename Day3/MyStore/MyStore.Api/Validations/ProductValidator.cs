@@ -7,18 +7,18 @@ public class ProductValidator : AbstractValidator<Models.Dtos.AddProductRequest>
 {
     public ProductValidator()
     {
-        RuleFor(p => p.Name)
+        RuleFor(p => p.NewProductName)
             .NotEmpty()
             .WithMessage("Product name is required.");
 
-        RuleFor(p => p.Price)
+        RuleFor(p => p.NewProductPrice)
             .GreaterThan(0)
             .WithMessage("Product price must be positive.");
 
         RuleFor(p => p.Description)
             .Length(5, 100);
 
-        RuleFor(p => p.Price).MustBeEven();
+        RuleFor(p => p.NewProductPrice).MustBeEven();
     }
 }
 
