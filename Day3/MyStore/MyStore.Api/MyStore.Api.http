@@ -13,7 +13,7 @@ Content-Type: application/json
 
 {
   "name": "This is the new Product2",
-  "price": 45,
+  "price": 46,
   "description": "aasdasdas"
 }
 
