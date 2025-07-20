@@ -21,7 +21,7 @@ public static class ProductsApi
         return routes;
     }
 
-    private static async Task<Results<NotFound, Ok<ProductDTO>>> GetProductById(IProductRepository repo, IMapper mapper, int id)
+    private static async Task<Results<NotFound, Ok<ProductDTO>>> GetProductById(IProductRepository repo, IApplicationMapper mapper, int id)
     {
         var product = await repo.GetProductById(id);
         return TypedResults.Ok(mapper.Map<ProductDTO>(product));
@@ -31,7 +31,7 @@ public static class ProductsApi
     private static async Task<Results<Created<ProductDTO>, ValidationProblem>> AddProductAsync(
         IProductRepository repo, 
         IValidator<AddProductRequest> validator,
-        IMapper mapper,
+        IApplicationMapper mapper,
         AddProductRequest product)
     {
 
@@ -47,7 +47,7 @@ public static class ProductsApi
         return TypedResults.Created($"/products/{created.Id}", result);
     }
 
-    private static async Task<Ok<List<ProductDTO>>> GetAllProductsAsync(IProductRepository repo, IMapper mapper)
+    private static async Task<Ok<List<ProductDTO>>> GetAllProductsAsync(IProductRepository repo, IApplicationMapper mapper)
     {
         var products = await repo.GetAllProducts();
         var productsDto = mapper.Map<List<ProductDTO>>(products);
@@ -55,7 +55,7 @@ public static class ProductsApi
     }
 
     private static async Task<Results<NotFound, Ok<ProductDTO>>> UpdateProductAsync(int id, IProductRepository repo, 
-        IMapper mapper, 
+        IApplicationMapper mapper, 
         Product product)
     {
         
@@ -68,7 +68,7 @@ public static class ProductsApi
         return TypedResults.Ok(mapper.Map<ProductDTO>(updated));
     }
 
-    private static async Task<Results<NotFound, Ok<ProductDTO>>> DeleteProductAsync(IMapper mapper, IProductRepository repo, int id)
+    private static async Task<Results<NotFound, Ok<ProductDTO>>> DeleteProductAsync(IApplicationMapper mapper, IProductRepository repo, int id)
     {
         var existing = await repo.GetProductById(id);
         await repo.DeleteProduct(id);
