@@ -9,3 +9,9 @@ public record Product
     public decimal Price { get; init; }
     public string? Description { get; init; }
 }
+
+// 1. Security
+// 2. Validation
+// 3. Mapping
+
+// BFF - Backend for Frontend

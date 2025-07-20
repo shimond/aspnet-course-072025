@@ -3,7 +3,7 @@ using FluentValidation.Validators;
 
 namespace MyStore.Api.Validations;
 
-public class ProductValidator : AbstractValidator<MyStore.Api.Models.Product>
+public class ProductValidator : AbstractValidator<Models.Product>
 {
     public ProductValidator()
     {

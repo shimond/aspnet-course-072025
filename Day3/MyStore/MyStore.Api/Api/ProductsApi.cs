@@ -2,6 +2,7 @@ using FluentValidation;
 using Microsoft.AspNetCore.Http.HttpResults;
 using MyStore.Api.Contracts;
 using MyStore.Api.Models;
+using MyStore.Api.Models.Dtos;
 
 namespace MyStore.Api.Api;
 
@@ -26,10 +27,10 @@ public static class ProductsApi
     }
 
 
-    private static async Task<Results<Created<Product>, ValidationProblem>> AddProductAsync(
+    private static async Task<Results<Created<ProductDTO>, ValidationProblem>> AddProductAsync(
         IProductRepository repo, 
-        IValidator<Product> validator,
-        Product product)
+        IValidator<AddProductRequest> validator,
+        AddProductRequest product)
     {
 
         var validationResults = await validator.ValidateAsync(product);
@@ -37,8 +38,23 @@ public static class ProductsApi
         {
             return TypedResults.ValidationProblem(validationResults.ToDictionary());
         }
-        var created = await repo.AddNewProduct(product);
-        return TypedResults.Created($"/products/{created.Id}", created); // 201 - return created location in the header response
+
+        var productToInsert = new Product
+        {
+            Name = product.Name,
+            Description = product.Description,
+            Price = product.Price,
+        };
+
+        var created = await repo.AddNewProduct(productToInsert);
+        ProductDTO result = new ProductDTO
+        {
+            Id = created.Id,
+            ProductName = created.Name,
+            Description = created.Description,
+            ProductPrice = created.Price
+        };
+        return TypedResults.Created($"/products/{created.Id}", result); 
     }
 
     private static async Task<Ok<List<Product>>> GetAllProductsAsync(IProductRepository repo)
