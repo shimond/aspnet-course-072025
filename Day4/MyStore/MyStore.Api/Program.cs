@@ -1,8 +1,3 @@
-
-using MyStore.Api.Auth;
-using MyStore.Api.Middlewares;
-using System.Security.Claims;
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddOpenApi();
@@ -23,10 +18,7 @@ builder.Services.AddAuthorization(authBuilder => {
         apb.RequireRole("Admin");
         //apb.RequireClaim("scope:delete-product", "1");
     });
-
 });
-
-
 
 builder.Services.AddAuthentication("Bearer").AddJwtBearer(); // add the authentication scheme
 
@@ -38,8 +30,8 @@ app.UseHandleApplicationErrorMiddleware();
 if (app.Environment.IsDevelopment())
 {
 
-    var dbContext = app.Services.CreateScope().ServiceProvider.GetRequiredService<MyStoreDataContext>();
-    await dbContext.Database.EnsureCreatedAsync();
+    //var dbContext = app.Services.CreateScope().ServiceProvider.GetRequiredService<MyStoreDataContext>();
+    //await dbContext.Database.EnsureCreatedAsync();
     app.MapOpenApi();
 }
 else
@@ -50,12 +42,14 @@ else
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.MapGet("test", () => "Hello, World!").AllowAnonymous();
+app.MapGet("test-os", () => Environment.OSVersion).AllowAnonymous();
+
 var all = app.MapGroup("").AddEndpointFilter<ValidationEndPointFilter>();
 
 all.MapProductApis();
 
 app.Run();
-
 
 
 // using configuration

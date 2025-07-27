@@ -6,3 +6,5 @@ global using MyStore.Api.Data;
 global using MyStore.Api.EndpointFilters;
 global using MyStore.Api.Services;
 global using System.Reflection;
+global using MyStore.Api.Auth;
+global using MyStore.Api.Middlewares;
