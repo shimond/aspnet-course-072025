@@ -1,5 +1,5 @@
-@MyStore.Api_HostAddress = http://localhost:5081
-
+@MyStore.Api_HostAddress = https://localhost:7157
+@userToken = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6InNoaW1vbkRhaGFuIiwic3ViIjoic2hpbW9uRGFoYW4iLCJqdGkiOiJiNmFmMjg2YiIsInZhbGlkRm9yTGF0ZXMiOiIzIiwiYXVkIjpbImh0dHA6Ly9sb2NhbGhvc3Q6NTA4MSIsImh0dHBzOi8vbG9jYWxob3N0OjcxNTciXSwibmJmIjoxNzUzNjAzNjQ5LCJleHAiOjE3NjE1NTI0NDksImlhdCI6MTc1MzYwMzY1MCwiaXNzIjoiZG90bmV0LXVzZXItand0cyJ9.nzbdJRUaPj9Xwcolb1HUYJpxE5F8vlt9W9fDWQXVUSc
 ### GET BY ID
 
 GET {{MyStore.Api_HostAddress}}/products/4
@@ -10,10 +10,13 @@ Content-Type: application/json
 ### Add New Product
 POST {{MyStore.Api_HostAddress}}/products
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IlNoaW1vIiwic3ViIjoiU2hpbW8iLCJqdGkiOiJkNjgwOTZjNiIsImF1ZCI6WyJodHRwOi8vbG9jYWxob3N0OjUwODEiLCJodHRwczovL2xvY2FsaG9zdDo3MTU3Il0sIm5iZiI6MTc1MzYwODI2MywiZXhwIjoxNzYxNTU3MDYzLCJpYXQiOjE3NTM2MDgyNjUsImlzcyI6ImRvdG5ldC11c2VyLWp3dHMifQ.pUxSf3rXM1j1FMTC468678EYBT--nedcqE5fSMzoF0A
+
+
 
 {
-  "productName": "sss222",
-  "productPrice": 8,
+  "productName": "PRODUCT NO 8821",
+  "productPrice": 80,
   "description": "abcAAA"
 }
 

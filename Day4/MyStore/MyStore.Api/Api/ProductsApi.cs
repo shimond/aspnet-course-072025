@@ -5,6 +5,7 @@ using MyStore.Api.Contracts;
 using MyStore.Api.EndpointFilters;
 using MyStore.Api.Models;
 using MyStore.Api.Models.Dtos;
+using System.Security.Claims;
 
 namespace MyStore.Api.Api;
 
@@ -13,38 +14,15 @@ public static class ProductsApi
     public static IEndpointRouteBuilder MapProductApis(this IEndpointRouteBuilder routes)
     {
         var group = routes.MapGroup("/products")
-            .WithTags("Products");
+            .WithTags("Products").RequireAuthorization();
 
-        group.MapPost("", AddProductAsync);
+        group.MapGet("", GetAllProductsAsync).AllowAnonymous();
+        group.MapGet("{id}", GetProductById);
 
-        //group.MapPost("", AddProductAsync).AddEndpointFilter(async (context, next) => {
-        //    foreach (var arg in context.Arguments)
-        //    {
-        //        if (arg is IValidatable)
-        //        {
-        //            var argumentType = arg.GetType(); 
-        //            var genericType = typeof(IValidator<>).MakeGenericType(argumentType); // open type
-
-        //            var validator = context.HttpContext.RequestServices.GetService(genericType) as IValidator;
-        //            if(validator is not  null)
-        //            {
-        //                var validResult = validator.Validate(new ValidationContext<object>(arg));
-        //                if(!validResult.IsValid)
-        //                {
-        //                    return TypedResults.ValidationProblem(validResult.ToDictionary());
-        //                }
-        //            }
-        //        }
-        //    }
-        //    var res = await next(context);
-        //    return res;
-
-        //}); 
-
-        group.MapGet("", GetAllProductsAsync);
+        group.MapPost("", AddProductAsync); //  user != anonymous
         group.MapPut("/{id}", UpdateProductAsync);
         group.MapDelete("/{id}", DeleteProductAsync);
-        group.MapGet("{id}", GetProductById);
+        
 
         return routes;
     }
@@ -57,7 +35,8 @@ public static class ProductsApi
 
 
     private static async Task<Results<Created<ProductDTO>, ValidationProblem>> AddProductAsync(
-        IProductRepository repo, 
+        IProductRepository repo,
+        ClaimsPrincipal user,
         IApplicationMapper mapper,
         AddProductRequest product)
     {

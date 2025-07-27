@@ -27,14 +27,18 @@ builder.Services.AddAutoMapper(typeof(Program));
 //builder.Services.AddDbContext<MyStoreDataContext>(o => o.UseInMemoryDatabase("MyStoreDb"));
 builder.Services.AddDbContext<MyStoreDataContext>(o => o.UseSqlServer(builder.Configuration.GetConnectionString("MyStoreDB")));
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
-builder.Services.AddCors(x => 
+builder.Services.AddCors(x =>
 x.AddDefaultPolicy(o => o.WithOrigins("https://shimonclient.com")
                             .AllowCredentials()
                             .AllowAnyHeader()
                             .AllowAnyMethod()));
 
-var app = builder.Build();
 
+
+builder.Services.AddAuthorization();
+builder.Services.AddAuthentication("Bearer").AddJwtBearer(); // add the authentication scheme
+
+var app = builder.Build();
 
 app.UseCors();
 
@@ -42,26 +46,17 @@ if (app.Environment.IsDevelopment())
 {
 
     var dbContext = app.Services.CreateScope().ServiceProvider.GetRequiredService<MyStoreDataContext>();
-    await dbContext.Database.EnsureCreatedAsync(); 
+    await dbContext.Database.EnsureCreatedAsync();
     app.MapOpenApi();
 }
+else
+{
+    app.UseHttpsRedirection();
 
-app.Use(async (context, next) => {
+}
+app.UseAuthentication();
+app.UseAuthorization();
 
-	try
-	{
-        await next();
-    }
-	catch (ItemNotFoundException ex)
-	{
-        app.Logger.LogError(ex,"Item not found");
-        context.Response.StatusCode = 404;
-        await context.Response.WriteAsync(ex.Message);
-	}
-});
-
-
-app.UseHttpsRedirection();
 var all = app.MapGroup("").AddEndpointFilter<ValidationEndPointFilter>();
 
 all.MapProductApis();
