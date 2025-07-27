@@ -1,21 +1,7 @@
-using FluentValidation;
-using Microsoft.EntityFrameworkCore;
-using MyStore.Api.Api;
-using MyStore.Api.Contracts;
-using MyStore.Api.Data;
-using MyStore.Api.EndpointFilters;
-using MyStore.Api.Exceptions;
-using MyStore.Api.Services;
-using System.Reflection;
 
-
-// using configuration
-// using dependency injection
-// using fluent validation
-// using automapper - (dto to dto mapping)
-// custom exception handling (with middleware)
-// using efcore with sql server (with in-memory database for development)
-// using cors
+using MyStore.Api.Auth;
+using MyStore.Api.Middlewares;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,23 +10,30 @@ builder.Services.AddScoped<IApplicationMapper, ApplicationMapper>();
 builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 builder.Services.AddAutoMapper(typeof(Program));
 
-//builder.Services.AddDbContext<MyStoreDataContext>(o => o.UseInMemoryDatabase("MyStoreDb"));
 builder.Services.AddDbContext<MyStoreDataContext>(o => o.UseSqlServer(builder.Configuration.GetConnectionString("MyStoreDB")));
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddCors(x =>
-x.AddDefaultPolicy(o => o.WithOrigins("https://shimonclient.com")
+    x.AddDefaultPolicy(o => o.WithOrigins("https://shimonclient.com")
                             .AllowCredentials()
                             .AllowAnyHeader()
                             .AllowAnyMethod()));
 
+builder.Services.AddAuthorization(authBuilder => {
+    authBuilder.AddPolicy(AuthorizationPolicies.ADMIN_POLICY, apb => {
+        apb.RequireRole("Admin");
+        //apb.RequireClaim("scope:delete-product", "1");
+    });
+
+});
 
 
-builder.Services.AddAuthorization();
+
 builder.Services.AddAuthentication("Bearer").AddJwtBearer(); // add the authentication scheme
 
 var app = builder.Build();
 
-app.UseCors();
+app.UseCors(); // listen to CORS requests with OPTIONS preflight requests   
+app.UseHandleApplicationErrorMiddleware();
 
 if (app.Environment.IsDevelopment())
 {
@@ -52,8 +45,8 @@ if (app.Environment.IsDevelopment())
 else
 {
     app.UseHttpsRedirection();
-
 }
+
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -62,3 +55,13 @@ var all = app.MapGroup("").AddEndpointFilter<ValidationEndPointFilter>();
 all.MapProductApis();
 
 app.Run();
+
+
+
+// using configuration
+// using dependency injection
+// using fluent validation
+// using automapper - (dto to dto mapping)
+// custom exception handling (with middleware)
+// using efcore with sql server (with in-memory database for development)
+// using cors

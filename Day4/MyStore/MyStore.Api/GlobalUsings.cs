@@ -1,0 +1,8 @@
+﻿global using FluentValidation;
+global using Microsoft.EntityFrameworkCore;
+global using MyStore.Api.Api;
+global using MyStore.Api.Contracts;
+global using MyStore.Api.Data;
+global using MyStore.Api.EndpointFilters;
+global using MyStore.Api.Services;
+global using System.Reflection;

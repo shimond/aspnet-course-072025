@@ -1,6 +1,7 @@
 using AutoMapper;
 using FluentValidation;
 using Microsoft.AspNetCore.Http.HttpResults;
+using MyStore.Api.Auth;
 using MyStore.Api.Contracts;
 using MyStore.Api.EndpointFilters;
 using MyStore.Api.Models;
@@ -17,11 +18,11 @@ public static class ProductsApi
             .WithTags("Products").RequireAuthorization();
 
         group.MapGet("", GetAllProductsAsync).AllowAnonymous();
-        group.MapGet("{id}", GetProductById);
+        group.MapGet("{id}", GetProductById).AllowAnonymous();
 
-        group.MapPost("", AddProductAsync); //  user != anonymous
+        group.MapPost("", AddProductAsync); 
         group.MapPut("/{id}", UpdateProductAsync);
-        group.MapDelete("/{id}", DeleteProductAsync);
+        group.MapDelete("/{id}", DeleteProductAsync).RequireAuthorization(AuthorizationPolicies.ADMIN_POLICY);
         
 
         return routes;

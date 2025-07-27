@@ -11,7 +11,9 @@ public class ProductRepository(MyStoreDataContext context) : IProductRepository
 {
     public async Task<List<Product>> GetAllProducts()
     {
-        var result = await context.Products.ToListAsync();
+        var result = await context.Products
+            .AsNoTracking()
+            .ToListAsync();
         return result;
     }
 
@@ -24,7 +26,9 @@ public class ProductRepository(MyStoreDataContext context) : IProductRepository
 
     public async Task<Product> GetProductById(int id)
     {
-        var result = await context.Products.FindAsync(id);
+        var result = await context.Products
+            .AsNoTracking()
+            .FirstOrDefaultAsync(p=> p.Id == id);
         if (result != null)
         {
             return result;
@@ -37,7 +41,7 @@ public class ProductRepository(MyStoreDataContext context) : IProductRepository
     public async Task<Product?> UpdateProduct(Product p)
     {
         var item = await this.GetProductById(p.Id);
-
+        //p !=  item
         context.Products.Update(p); //  Attach the entity to the context and mark it as modified
         await context.SaveChangesAsync(); // rows affected will be 1 if the entity was found and updated, 0 if it was not found
         return p;
