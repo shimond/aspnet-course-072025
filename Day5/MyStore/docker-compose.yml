@@ -31,5 +31,11 @@ services:
        - sqlserver
        - seq
 
+  bff:
+    image: ${DOCKER_REGISTRY-}bff
+    build:
+      context: .
+      dockerfile: BFF/Dockerfile
+
 volumes:
   sqlserver-data:
