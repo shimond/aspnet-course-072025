@@ -41,3 +41,12 @@ app.MapRazorComponents<App>()
 app.MapDefaultEndpoints();
 
 app.Run();
+
+// Logging
+// Metrics
+// Http retries
+// Circuit breakers
+// service discovery
+
+
+// health checks

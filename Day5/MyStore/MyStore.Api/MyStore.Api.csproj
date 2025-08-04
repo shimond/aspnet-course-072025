@@ -22,4 +22,8 @@
     <PackageReference Include="Seq.Extensions.Logging" Version="8.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MyStore.ServiceDefaults\MyStore.ServiceDefaults.csproj" />
+  </ItemGroup>
+
 </Project>

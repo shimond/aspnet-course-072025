@@ -1,5 +1,7 @@
 var builder = WebApplication.CreateBuilder(args);
 
+builder.AddServiceDefaults();
+
 var seqConnectionString = builder.Configuration.GetConnectionString("seq");
 builder.Logging.AddSeq(seqConnectionString);
 
@@ -26,6 +28,8 @@ builder.Services.AddAuthorization(authBuilder => {
 builder.Services.AddAuthentication("Bearer").AddJwtBearer(); // add the authentication scheme
 
 var app = builder.Build();
+
+app.MapDefaultEndpoints();
 
 app.UseCors(); // listen to CORS requests with OPTIONS preflight requests   
 app.UseHandleApplicationErrorMiddleware();
