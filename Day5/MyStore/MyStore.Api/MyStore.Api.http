@@ -1,4 +1,4 @@
-@MyStore.Api_HostAddress = http://localhost:32774
+@MyStore.Api_HostAddress = http://localhost:1658
 @userToken = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IlNoaW1vIiwic3ViIjoiU2hpbW8iLCJqdGkiOiJkNjgwOTZjNiIsImF1ZCI6WyJodHRwOi8vbG9jYWxob3N0OjUwODEiLCJodHRwczovL2xvY2FsaG9zdDo3MTU3Il0sIm5iZiI6MTc1MzYwODI2MywiZXhwIjoxNzYxNTU3MDYzLCJpYXQiOjE3NTM2MDgyNjUsImlzcyI6ImRvdG5ldC11c2VyLWp3dHMifQ.pUxSf3rXM1j1FMTC468678EYBT--nedcqE5fSMzoF0A
 @adminToke = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6InNoaW1vbkFkbWluIiwic3ViIjoic2hpbW9uQWRtaW4iLCJqdGkiOiJmNzIzMTNjNiIsInJvbGUiOiJBZG1pbiIsImF1ZCI6WyJodHRwOi8vbG9jYWxob3N0OjUwODEiLCJodHRwczovL2xvY2FsaG9zdDo3MTU3Il0sIm5iZiI6MTc1MzYxNTY5MSwiZXhwIjoxNzYxNTY0NDkxLCJpYXQiOjE3NTM2MTU2OTUsImlzcyI6ImRvdG5ldC11c2VyLWp3dHMifQ.cOZx8A9SGkoiLgk8arUx2WeeRBN1R-ZGKBlspgy0S7A
 ### GET BY ID
@@ -16,9 +16,9 @@ Authorization: {{userToken}}
 
 
 {
-  "productName": "PRODUCT NO 555",
+  "productName": "Bamba",
   "productPrice": 10,
-  "description": "abcAAA"
+  "description": "Shel osem"
 }
 
 ### Get All Products
@@ -27,12 +27,12 @@ Content-Type: application/json
 
 
 ### UPDATE product by ID
-PUT {{MyStore.Api_HostAddress}}/products/2 // full update
+PUT {{MyStore.Api_HostAddress}}/products/1 // full update
 Content-Type: application/json
 Authorization: {{userToken}}
 
 {
-    "id": 15,
+    "id": 1,
     "name": "Bamba 123123",
     "price": 14.16,
     "description": "Bamba nugat shel OSEM"

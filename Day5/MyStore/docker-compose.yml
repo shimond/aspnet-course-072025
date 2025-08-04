@@ -1,0 +1,35 @@
+services:
+  
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: products-data-server
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=YourStrong!Passw0rd
+    ports:
+      - "2458:1433"
+    volumes:
+      - sqlserver-data:/var/opt/mssql
+
+  seq:
+    container_name: seqlogging
+    image:  datalust/seq:latest
+    environment:
+      ACCEPT_EULA: "Y"
+    ports:
+      - 5341:80
+      - 5342:443
+
+
+  mystore.api:
+    container_name: mystore.api
+    image: ${DOCKER_REGISTRY-}mystoreapi
+    build:
+      context: .
+      dockerfile: MyStore.Api/Dockerfile
+    depends_on:
+       - sqlserver
+       - seq
+
+volumes:
+  sqlserver-data:

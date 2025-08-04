@@ -1,5 +1,8 @@
 var builder = WebApplication.CreateBuilder(args);
-builder.Logging.AddSeq();
+
+var seqConnectionString = builder.Configuration.GetConnectionString("seq");
+builder.Logging.AddSeq(seqConnectionString);
+
 builder.Services.AddOpenApi();
 builder.Services.AddScoped<IApplicationMapper, ApplicationMapper>();
 builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
@@ -29,9 +32,8 @@ app.UseHandleApplicationErrorMiddleware();
 
 if (app.Environment.IsDevelopment())
 {
-
-    //var dbContext = app.Services.CreateScope().ServiceProvider.GetRequiredService<MyStoreDataContext>();
-    //await dbContext.Database.EnsureCreatedAsync();
+    var dbContext = app.Services.CreateScope().ServiceProvider.GetRequiredService<MyStoreDataContext>();
+    await dbContext.Database.EnsureCreatedAsync();
     app.MapOpenApi();
 }
 else
