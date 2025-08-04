@@ -1,0 +1,10 @@
+@AuthApi_HostAddress = http://localhost:5054
+
+GET {{AuthApi_HostAddress}}/secret
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IlNoaW1vIiwic3ViIjoiU2hpbW8iLCJqdGkiOiI5OWUzODA2MyIsImF1ZCI6WyJodHRwOi8vbG9jYWxob3N0OjUwNTQiLCJodHRwczovL2xvY2FsaG9zdDo3MTY3Il0sIm5iZiI6MTc1MzYwNjYzOSwiZXhwIjoxNzYxNTU1NDM5LCJpYXQiOjE3NTM2MDY2NDAsImlzcyI6ImRvdG5ldC11c2VyLWp3dHMifQ.CI5l5pv0VyUUDdbeyb-zwyw3eSoeGqu0qxXzXFPCrbk
+###
+
+GET {{AuthApi_HostAddress}}
+Accept: application/json
+###
