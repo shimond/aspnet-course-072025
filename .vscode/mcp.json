@@ -1,8 +1,0 @@
-{
-	"servers": {
-		"eshopmcp": {
-			"url": "https://localhost:7133/sse"
-		}
-	},
-	"inputs": []
-}
